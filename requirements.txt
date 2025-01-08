@@ -1,0 +1,4 @@
+imaging-server-kit
+tensorflow
+stardist
+numpy==1.26.4
