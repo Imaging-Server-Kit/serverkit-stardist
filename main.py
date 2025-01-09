@@ -13,7 +13,7 @@ class Parameters(BaseModel):
     image: str = Field(
         ...,
         title="Image",
-        description="Input image (2D, 3D).",
+        description="Input image (2D).",
         json_schema_extra={"widget_type": "image"},
     )
     stardist_model_name: Literal["2D_versatile_fluo", "2D_versatile_he"] = Field(

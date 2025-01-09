@@ -36,7 +36,7 @@ A documentation of the endpoints is automatically generated at http://localhost:
 
 **POST endpoints**
 
-- http://localhost:8000/stardist/: Processing endpoint to run the algorithm.
+- http://localhost:8000/stardist/process: Processing endpoint to run the algorithm.
 
 ## Running the server with `docker-compose`
 

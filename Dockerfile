@@ -1,4 +1,4 @@
-FROM registry.rcp.epfl.ch/imaging-server-kit/imaging-server-kit:3.9
+FROM mallorywittwerepfl/imaging-server-kit:3.9
 
 COPY . .
 
