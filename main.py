@@ -59,7 +59,7 @@ class Parameters(BaseModel):
     @field_validator("image", mode="after")
     def decode_image_array(cls, v) -> np.ndarray:
         image_array = serverkit.decode_contents(v)
-        if image_array.ndim != 2:
+        if image_array.ndim not in [2, 3]:
             raise ValueError("Array has the wrong dimensionality.")
         return image_array
 

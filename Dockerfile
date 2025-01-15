@@ -1,4 +1,4 @@
-FROM mallorywittwerepfl/imaging-server-kit:3.9
+FROM mallorywittwerepfl/imaging-server-kit:latest
 
 COPY . .
 
