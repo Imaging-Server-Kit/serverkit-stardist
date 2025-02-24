@@ -1,7 +1,6 @@
 project_slug: "stardist"
 project_url: "https://github.com/stardist/stardist"
 serverkit_repo_url: "https://github.com/Imaging-Server-Kit/serverkit-stardist"
-serverkit_author: "EPFL Center for Imaging"
 project_name: "StarDist (2D)"
 description: "Object Detection with Star-convex Shapes."
 used_for:
@@ -9,6 +8,7 @@ used_for:
 tags:
   - "Deep learning"
   - "Fluorescence microscopy"
+  - "H&E"
   - "Digital pathology"
   - "Cell biology"
   - "EPFL"

@@ -61,6 +61,10 @@ class Parameters(BaseModel):
         image_array = serverkit.decode_contents(v)
         if image_array.ndim not in [2, 3]:
             raise ValueError("Array has the wrong dimensionality.")
+        if image_array.ndim == 3:
+            # Assuming it's RGB, make sure it has 3 channels
+            if image_array.shape[2] != 3:
+                raise ValueError("Array has the wrong dimensionality.")
         return image_array
 
 
@@ -84,20 +88,31 @@ class Server(serverkit.Server):
         """Instance cell nuclei segmentation using StarDist."""
         model = StarDist2D.from_pretrained(stardist_model_name)
 
-        segmentation, polys = model.predict_instances(
-            normalize(image),
-            prob_thresh=prob_thresh,
-            nms_thresh=nms_thresh,
-            scale=scale,
-            **kwargs,
-        )
+        if (image.shape[0] + image.shape[1]) / 2 < 1024:
+            segmentation, polys = model.predict_instances(
+                normalize(image),
+                prob_thresh=prob_thresh,
+                nms_thresh=nms_thresh,
+                scale=scale,
+                **kwargs,
+            )
+        else:
+            segmentation, polys = model.predict_instances_big(
+                normalize(image),
+                prob_thresh=prob_thresh,
+                nms_thresh=nms_thresh,
+                scale=scale,
+                block_size=512,
+                min_overlap=64,
+                axes="YX",
+                return_labels=True,
+                **kwargs,
+            )
 
-        segmentation_params = {
-            "name": f"{stardist_model_name}_mask",
-        }
+        segmentation_params = {"name": f"{stardist_model_name}_mask"}
 
         return [
-            (segmentation, segmentation_params, "labels"),
+            (segmentation, segmentation_params, "instance_mask"),
         ]
 
     def load_sample_images(self) -> List["np.ndarray"]:
@@ -110,5 +125,5 @@ class Server(serverkit.Server):
 server = Server()
 app = server.app
 
-if __name__=='__main__':
+if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000)
