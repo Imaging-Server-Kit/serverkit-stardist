@@ -68,7 +68,7 @@ class Parameters(BaseModel):
         return image_array
 
 
-class Server(serverkit.Server):
+class StarDistServer(serverkit.AlgorithmServer):
     def __init__(
         self,
         algorithm_name: str = "stardist",
@@ -122,7 +122,7 @@ class Server(serverkit.Server):
         return images
 
 
-server = Server()
+server = StarDistServer()
 app = server.app
 
 if __name__ == "__main__":
